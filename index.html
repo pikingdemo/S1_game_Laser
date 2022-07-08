@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>打xx遊戲</title>
+        <link rel="icon" sizes="8*8" href="cancel.png">
+        <meta charset="utf-8">
+        <meta content="Laser">
+    </head>
+    <body align="center" style="background-image: url('./123.jpg');background-repeat:no-repeat;background-size:100% 390%;">
+         <div style="background-color:green ;">
+            <a style="font-size: 50px;" title="1.打到目標得分
+2.非目標直接失敗"> 遊戲說明</a><br>
+            <table align="center" border="3px">
+                <tr>
+                    <th>人物樣子</th>
+                    <td><img style="width: 50px;height: 50px;" src="cancel.png"></td>
+                    <td><img style="width: 50px;height: 50px;" src="cat.png"></td>
+                </tr>
+                <tr>
+                    <th>擊殺目標</th>
+                    <td>o</td>
+                    <td>x</td>
+                </tr>
+            </table>
+            <h3>遊戲難度</h3>
+            <form id="whichlevel">
+               <label><input type="radio" name="level" value="easy">簡單</label> 
+               <label><input type="radio" name="level" value="medium" checked>中等</label> 
+               <label><input type="radio" name="level" value="hard">困難</label> 
+            </form>
+            <button onclick="start()"> 開始遊戲 </button>
+            <button onclick="refresh()"> 重新一局 </button>
+            <br> <a id='score'>score:0</a>
+             <a id='time'>time:60</a>
+        </div>
+        <div style="cursor: url(./ice-cream.ico),auto;position: absolute;height: 60%;width: 100%;">
+            <img id="demo1">
+            <img id="demo2">
+            <img id="demo3">
+            <img id="demo4">
+            <map name="workmap1">
+                <area shape="circle" coords="0,0,100" onclick="hit1()">
+            </map>
+            <map name="workmap2">
+                <area shape="circle" coords="0,0,100" onclick="hit2()">
+            </map>
+            <map name="workmap3">
+                <area shape="circle" coords="0,0,100" onclick="hit3()">
+            </map>
+            <map name="workmap4">
+                <area shape="circle" coords="0,0,100" onclick="hit4()">
+            </map>
+            <map name="workmap5">
+                <area shape="circle" coords="0,0,100" onclick="hit5()">
+            </map>
+        </div> 
+        <script>
+            function getRandom(min,max)
+            {
+                 return Math.floor(Math.random()*(max-min+1))+min;
+            };
+            var count=60;
+            var click=false;
+            function start()
+            {
+                if(click==false)
+                {
+                     var timer=null;
+                    timer=setInterval(function ()
+                    {
+                        if(count>0)
+                        {
+                            count=count-1;
+                            document.getElementById('time').innerHTML="time:"+count
+                            var randomimg1=getRandom(0,1);
+                            var randomimg2=getRandom(0,1);
+                            var randomimg3=getRandom(0,1);
+                            var randomimg4=getRandom(0,1);
+                            var img1="none";
+                            var img2="none";
+                            var img3="none";
+                            var img4="none";
+                            var map1="none";
+                            var map2="none";
+                            var map3="none";
+                            var map4="none";
+                            if(randomimg1==0)
+                            {
+                                img1 = "cancel.png";
+                                map1="#workmap1";
+                            }
+                            else
+                            {
+                                img1 = "cat.png";
+                                map1="#workmap5";
+                            }
+                            if(randomimg2==0)
+                            {
+                                img2 = "cancel.png";
+                                map2="#workmap2";
+                            }
+                            else
+                            {
+                                img2 = "cat.png";
+                                map2="#workmap5";
+                            }
+                            if(randomimg3==0)
+                            {
+                                img3 = "cancel.png";
+                                map3="#workmap3";
+                            }
+                            else
+                            {
+                                img3 = "cat.png";
+                                map3="#workmap5";
+                            }
+                            if(randomimg4==0)
+                            {
+                                img4 = "cancel.png";
+                                map4="#workmap4";
+                            }
+                            else
+                            {
+                                img4 = "cat.png";
+                                map4="#workmap5";
+                            }
+                            document.getElementById("demo1").src=img1;
+                            document.getElementById("demo1").useMap=map1;
+                            document.getElementById("demo2").src=img2;
+                            document.getElementById("demo2").useMap=map2;
+                            document.getElementById("demo3").src=img3;
+                            document.getElementById("demo3").useMap=map3;
+                            document.getElementById("demo4").src=img4;
+                            document.getElementById("demo4").useMap=map4;
+                            var lv=document.getElementById("whichlevel").elements["level"].value;
+                            if(lv=="easy")
+                            {
+                                document.getElementById("demo1").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo2").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo3").style="display:none"
+                                document.getElementById("demo4").style="display:none"
+                            }
+                            else if(lv=="medium")
+                            {
+                                document.getElementById("demo1").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo2").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo3").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo4").style="display:none"
+                            }
+                            else if(lv=="hard")
+                            {
+                                document.getElementById("demo1").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo2").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo3").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                                document.getElementById("demo4").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"%"+Math.ceil(Math.random()*40)+"% "+"auto "+Math.ceil(Math.random()*40)+"%"
+                            }
+                        }
+                    else
+                        {
+                            document.getElementById("demo1").style="display:none"
+                            document.getElementById("demo2").style="display:none"
+                            document.getElementById("demo3").style="display:none"
+                            document.getElementById("demo4").style="display:none"
+                            document.getElementById("time").innerHTML="game over"
+                        }
+                    
+                    },1000);
+                }
+                click = ture;
+            }
+            var n = 0;
+            function addscore()
+            {
+                n=n+1;
+                document.getElementById("score").innerHTML="grate:" + n ;
+            }
+            function hit1()
+            {
+                document.getElementById("demo1").src='blood.png';
+                document.getElementById("demo1").useMap="";
+                addscore();
+                var audio = new Audio("./selsct02.mp3");
+                audio.play();
+            }
+            function hit2()
+            {
+                document.getElementById("demo2").src='blood.png';
+                document.getElementById("demo2").useMap="";
+                addscore();
+                var audio = new Audio("./selsct02.mp3");
+                audio.play();
+            }
+            function hit3()
+            {
+                document.getElementById("demo3").src='blood.png';
+                document.getElementById("demo3").useMap="";
+                addscore();
+                var audio = new Audio("./selsct02.mp3");
+                audio.play();
+            }
+            function hit4()
+            {
+                document.getElementById("demo4").src='blood.png';
+                document.getElementById("demo4").useMap="";
+                addscore();
+                var audio = new Audio("./selsct02.mp3");
+                audio.play();
+            }
+            function hit5()
+            {
+                start(count=0);
+                var audio = new Audio("./selsct01.mp3");
+                audio.play();
+            }
+            function refresh()
+            {
+                window.location.reload();
+            }
+        </script>
+    </body>
+</html>
